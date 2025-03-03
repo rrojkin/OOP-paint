@@ -80,6 +80,7 @@
                            Margin="10, 0, 0, 0"
                            Width ="50"
                            Style="{StaticResource PressedToggleButtonStyle}"
+                           Click="shapeButtonClick"
              />
 
             <ToggleButton Name="RectangleButton"
@@ -89,6 +90,7 @@
                           Margin="10, 0, 0, 0"
                           Width ="50"
                           Style="{StaticResource PressedToggleButtonStyle}"
+                          Click="shapeButtonClick"
              />
 
             <ToggleButton Name="EllipseButton"
@@ -98,6 +100,7 @@
                           Margin="10, 0, 0, 0"
                           Width ="50"
                           Style="{StaticResource PressedToggleButtonStyle}"
+                          Click="shapeButtonClick"
              />
 
             <ToggleButton Name="PolygonButton"
@@ -107,6 +110,7 @@
                           Margin="10, 0, 0, 0"
                           Width ="50"
                           Style="{StaticResource PressedToggleButtonStyle}"
+                          Click="shapeButtonClick"
              />
 
             <ToggleButton Name="PolylineButton"
@@ -116,15 +120,15 @@
                           Margin="10, 0, 0, 0"
                           Width ="50"
                           Style="{StaticResource PressedToggleButtonStyle}"
+                          Click="shapeButtonClick"
              />
 
-            <ToggleButton Name="SettingsButton"
+            <Button Name="SettingsButton"
                           Grid.Column="5"
                           Content="Settings"
                           HorizontalAlignment="Right"
                           Margin="0, 0, 10, 0"
                           Width ="50"
-                          Style="{StaticResource PressedToggleButtonStyle}"
              />
         </Grid>
 
