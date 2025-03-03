@@ -8,7 +8,6 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
-        <!-- Стиль для ToggleButton -->
         <Style x:Key="PressedToggleButtonStyle" TargetType="ToggleButton">
             <Setter Property="Background" Value="LightGray" />
             <Setter Property="BorderBrush" Value="Gray" />
@@ -26,18 +25,15 @@
                                           VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <!-- Триггер для состояния "нажато" -->
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="DarkGray" />
                                 <Setter TargetName="Border" Property="BorderBrush" Value="Black" />
                                 <Setter TargetName="Border" Property="BorderThickness" Value="1" />
                                 <Setter TargetName="Border" Property="Padding" Value="0" />
                             </Trigger>
-                            <!-- Триггер для состояния "наведено" -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="LightGray" />
                             </Trigger>
-                            <!-- Триггер для состояния "нажато и наведено" -->
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsChecked" Value="True" />
@@ -45,7 +41,6 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Border" Property="Background" Value="DarkGray" />
                             </MultiTrigger>
-                            <!-- Отключение стандартной анимации -->
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="DarkGray" />
                             </Trigger>
