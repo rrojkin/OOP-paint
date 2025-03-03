@@ -6,7 +6,140 @@
         xmlns:local="clr-namespace:OOP_paint"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
+    <Window.Resources>
+        <!-- Стиль для ToggleButton -->
+        <Style x:Key="PressedToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="LightGray" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="0.5" />
+            <Setter Property="Padding" Value="0.5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Триггер для состояния "нажато" -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="DarkGray" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="Black" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="1" />
+                                <Setter TargetName="Border" Property="Padding" Value="0" />
+                            </Trigger>
+                            <!-- Триггер для состояния "наведено" -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <!-- Триггер для состояния "нажато и наведено" -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Border" Property="Background" Value="DarkGray" />
+                            </MultiTrigger>
+                            <!-- Отключение стандартной анимации -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="DarkGray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="ButtonGrid"
+              Grid.Row="0"
+              Background="DarkGray"
+              Margin="0"
+              >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ToggleButton  Name="LineButton"
+                           Grid.Column="0"
+                           Content="Line"
+                           HorizontalAlignment="Left"
+                           Margin="10, 0, 0, 0"
+                           Width ="50"
+                           Style="{StaticResource PressedToggleButtonStyle}"
+             />
+
+            <ToggleButton Name="RectangleButton"
+                          Grid.Column="1"
+                          Content="Rect"
+                          HorizontalAlignment="Left"
+                          Margin="10, 0, 0, 0"
+                          Width ="50"
+                          Style="{StaticResource PressedToggleButtonStyle}"
+             />
+
+            <ToggleButton Name="EllipseButton"
+                          Grid.Column="2"
+                          Content="Ellipse"
+                          HorizontalAlignment="Left"
+                          Margin="10, 0, 0, 0"
+                          Width ="50"
+                          Style="{StaticResource PressedToggleButtonStyle}"
+             />
+
+            <ToggleButton Name="PolygonButton"
+                          Grid.Column="3"
+                          Content="Polygon"
+                          HorizontalAlignment="Left"
+                          Margin="10, 0, 0, 0"
+                          Width ="50"
+                          Style="{StaticResource PressedToggleButtonStyle}"
+             />
+
+            <ToggleButton Name="PolylineButton"
+                          Grid.Column="4"
+                          Content="Polyline"
+                          HorizontalAlignment="Left"
+                          Margin="10, 0, 0, 0"
+                          Width ="50"
+                          Style="{StaticResource PressedToggleButtonStyle}"
+             />
+
+            <ToggleButton Name="SettingsButton"
+                          Grid.Column="5"
+                          Content="Settings"
+                          HorizontalAlignment="Right"
+                          Margin="0, 0, 10, 0"
+                          Width ="50"
+                          Style="{StaticResource PressedToggleButtonStyle}"
+             />
+        </Grid>
+
+
+        <Canvas Name="MainCanvas"
+                Grid.Row="1"
+                Background="Black"
+                Margin="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+        </Canvas>
     </Grid>
 </Window>
