@@ -57,6 +57,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Canvas Name="MainCanvas"
+                Grid.Row="1"
+                Background="Black"
+                Margin="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                MouseLeftButtonDown="mainCanvas_LeftMouseDown"
+                MouseRightButtonDown="mainCanvas_RightMouseDown"
+                MouseMove="mainCanvas_MouseMove"  
+        />
+
         <Grid Name="ButtonGrid"
               Grid.Row="0"
               Background="DarkGray"
@@ -103,9 +114,9 @@
                           Click="shapeButtonClick"
              />
 
-            <ToggleButton Name="PolygonButton"
+            <ToggleButton Name="TriangleButton"
                           Grid.Column="3"
-                          Content="Polygon"
+                          Content="Triangle"
                           HorizontalAlignment="Left"
                           Margin="10, 0, 0, 0"
                           Width ="50"
@@ -133,12 +144,6 @@
         </Grid>
 
 
-        <Canvas Name="MainCanvas"
-                Grid.Row="1"
-                Background="Black"
-                Margin="0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
-        </Canvas>
+        
     </Grid>
 </Window>
