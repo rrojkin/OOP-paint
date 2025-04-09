@@ -11,7 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using OOP_paint.Models;
+using OOP_paint.ShapeModels;
 
 namespace OOP_paint
 {
@@ -92,7 +92,7 @@ namespace OOP_paint
         {
             if (selectedShape != allShapes.polyline) return;
 
-            if (isDrawing && currentShape is Models.Polyline)
+            if (isDrawing && currentShape is ShapeModels.Polyline)
             {
                 shapes.Add(currentShape);
                 isDrawing = false;
@@ -116,7 +116,7 @@ namespace OOP_paint
                 switch (selectedShape)
                 {
                     case allShapes.line:
-                        currentShape = new Models.Line()
+                        currentShape = new ShapeModels.Line()
                         {
                             StartPoint = startPoint,
                             EndPoint = startPoint,
@@ -126,7 +126,7 @@ namespace OOP_paint
                         break;
 
                     case allShapes.rect:
-                        currentShape = new Models.Rectangle
+                        currentShape = new ShapeModels.Rectangle
                         {
                             TopLeft = startPoint,
                             Width = 0,
@@ -137,7 +137,7 @@ namespace OOP_paint
                         break;
 
                     case allShapes.ellipse:
-                        currentShape = new Models.Ellipse
+                        currentShape = new ShapeModels.Ellipse
                         {
                             TopLeft = startPoint,
                             Width = 0,
@@ -148,7 +148,7 @@ namespace OOP_paint
                         break;
 
                     case allShapes.polygon:
-                        currentShape = new Models.Triangle()
+                        currentShape = new ShapeModels.Triangle()
                         {
                             Stroke = Brushes.White,
                             StrokeThickness = 2,
@@ -159,15 +159,15 @@ namespace OOP_paint
                         Debug.WriteLine("Done");
                         break;
 
-                        currentShape = new Models.Polygon(new PointCollection { startPoint })
-                        {
-                            Stroke = Brushes.White,
-                            StrokeThickness = 2
-                        };
-                        break;
+                        //currentShape = new Models.Polygon(new PointCollection { startPoint })
+                       // {
+                        //    Stroke = Brushes.White,
+                       //     StrokeThickness = 2
+                       // };
+                       // break;
 
                     case allShapes.polyline:
-                        currentShape = new Models.Polyline(new PointCollection { startPoint })
+                        currentShape = new ShapeModels.Polyline(new PointCollection { startPoint })
                         {
                             Stroke = Brushes.White,
                             StrokeThickness = 2
@@ -180,36 +180,36 @@ namespace OOP_paint
                 // Второй клик, конец рисования
                 if (selectedShape == allShapes.polygon)
                 {
-                    if (currentShape is Models.Triangle triangle)
+                    if (currentShape is ShapeModels.Triangle triangle)
                     {
                         
                     }
                 }
                 else
                 {
-                    if (currentShape is Models.Line line)
+                    if (currentShape is ShapeModels.Line line)
                     {
                         line.EndPoint = currentPoint;
                     }
-                    else if (currentShape is Models.Rectangle rect)
+                    else if (currentShape is ShapeModels.Rectangle rect)
                     {
                         rect.Width = Math.Abs(currentPoint.X - startPoint.X);
                         rect.Height = Math.Abs(currentPoint.Y - startPoint.Y);
                         rect.TopLeft = new Point(Math.Min(startPoint.X, currentPoint.X), Math.Min(startPoint.Y, currentPoint.Y));
                     }
-                    else if (currentShape is Models.Ellipse ellipse)
+                    else if (currentShape is ShapeModels.Ellipse ellipse)
                     {
                         ellipse.Width = Math.Abs(currentPoint.X - startPoint.X);
                         ellipse.Height = Math.Abs(currentPoint.Y - startPoint.Y);
                         ellipse.TopLeft = new Point(Math.Min(startPoint.X, currentPoint.X), Math.Min(startPoint.Y, currentPoint.Y));
                     }
-                    else if (currentShape is Models.Polyline polyline)
+                    else if (currentShape is ShapeModels.Polyline polyline)
                     {
                         polyline.Points.Add(currentPoint);
                     }
                 }
 
-                if (currentShape is not Models.Polyline || currentShape is Models.Triangle)
+                if (currentShape is not ShapeModels.Polyline || currentShape is ShapeModels.Triangle)
                 {
                     shapes.Add(currentShape);
                     currentShape = null;
@@ -228,23 +228,23 @@ namespace OOP_paint
 
             switch (currentShape)
             {
-                case Models.Line line:
+                case ShapeModels.Line line:
                     line.EndPoint = endPoint;
                     break;
 
-                case Models.Rectangle rect:
+                case ShapeModels.Rectangle rect:
                     rect.Width = Math.Abs(endPoint.X - startPoint.X);
                     rect.Height = Math.Abs(endPoint.Y - startPoint.Y);
                     rect.TopLeft = new Point(Math.Min(startPoint.X, endPoint.X), Math.Min(startPoint.Y, endPoint.Y));
                     break;
 
-                case Models.Ellipse ellipse:
+                case ShapeModels.Ellipse ellipse:
                     ellipse.Width = Math.Abs(endPoint.X - startPoint.X);
                     ellipse.Height = Math.Abs(endPoint.Y - startPoint.Y);
                     ellipse.TopLeft = new Point(Math.Min(startPoint.X, endPoint.X), Math.Min(startPoint.Y, endPoint.Y));
                     break;
 
-                case Models.Triangle triangle:
+                case ShapeModels.Triangle triangle:
                     triangle.EndPoint = endPoint;
                     
                     break;
@@ -254,7 +254,7 @@ namespace OOP_paint
                     //    polygon.Points[polygon.Points.Count - 1] = endPoint; // Adjust last point while drawing
                     //}
 
-                case Models.Polyline polyline:
+                case ShapeModels.Polyline polyline:
                     if (polyline.Points.Count > 1)
                     {
                         
