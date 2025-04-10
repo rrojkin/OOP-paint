@@ -129,7 +129,7 @@ namespace OOP_paint
                 { "EllipseButton", () => new ShapeModels.Ellipse { Stroke = Brushes.White, StrokeThickness = 2 } },
                 { "LineButton", () => new ShapeModels.Line { Stroke = Brushes.White, StrokeThickness = 2 } },
                 { "TriangleButton", () => new ShapeModels.Triangle { Stroke = Brushes.White, StrokeThickness = 2 } },
-                { "PolylineButton", () => new ShapeModels.Polyline { Stroke = Brushes.White, StrokeThickness = 2 } }
+                { "PolylineButton", () => new ShapeModels.Polygon { Stroke = Brushes.White, StrokeThickness = 2 } }
             };
 
         }

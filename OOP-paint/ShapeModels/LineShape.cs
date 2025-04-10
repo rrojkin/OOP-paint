@@ -14,7 +14,7 @@ namespace OOP_paint.ShapeModels
         {
             _initialPoint = startPoint;
             StartPoint = startPoint;
-            EndPoint = startPoint; // пока не тянем — линия нулевая
+            EndPoint = startPoint;
         }
 
         public override void Update(Point currentPoint)

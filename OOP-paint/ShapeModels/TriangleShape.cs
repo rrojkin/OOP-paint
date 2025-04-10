@@ -11,9 +11,6 @@ namespace OOP_paint.ShapeModels
         public Point StartPoint { get; set; }
         public Point EndPoint { get; set; }
 
-        public Brush Stroke { get; set; }
-        public double StrokeThickness { get; set; }
-
         public override void Start(Point startPoint)
         {
             StartPoint = startPoint;

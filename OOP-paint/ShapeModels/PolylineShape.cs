@@ -33,7 +33,7 @@ namespace OOP_paint.ShapeModels
             }
         }
 
-        public void Finish()
+        public virtual void Finish()
         {
             if (Points.Count >= 2)
             {
