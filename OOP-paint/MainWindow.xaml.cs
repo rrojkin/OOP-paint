@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using OOP_paint.ShapeModels;
 
 namespace OOP_paint
@@ -18,6 +10,10 @@ namespace OOP_paint
    
     public partial class MainWindow : Window
     {
+
+        private Dictionary<string, Func<ShapeBase>> shapeFactory;
+
+
         private enum allShapes
         {
             line,
@@ -33,70 +29,30 @@ namespace OOP_paint
         private Point startPoint;
         private bool isDrawing = false;
         private List<ShapeBase> shapes = new List<ShapeBase>();
+        private ToggleButton selectedButton = null;
 
 
         public void shapeButtonClick(object sender, RoutedEventArgs e)
         {
-            deselectButton(selectedShape);
-            ToggleButton button= sender as ToggleButton;
-            if (button == null) return;
-
-            switch (button.Name)
+            if (selectedButton != null)
             {
-                case "LineButton":        
-                    selectedShape = allShapes.line;
-                    break;
-                case "RectangleButton": 
-                    selectedShape = allShapes.rect;
-                    break;
-                case "EllipseButton":
-                    selectedShape = allShapes.ellipse;
-                    break;
-                case "TriangleButton":
-                    selectedShape = allShapes.polygon;
-                    break;    
-                case "PolylineButton":
-                    selectedShape = allShapes.polyline;
-                    break;
-                default: return;
+                selectedButton.IsChecked = false;
             }
 
-            button.IsChecked = true;
-        }
+            selectedButton = sender as ToggleButton;
+            selectedButton.IsChecked = true;
 
-        private void deselectButton(allShapes shape)
-        {
-            switch (shape)
-            {
-                case allShapes.line:
-                    LineButton.IsChecked = false;
-                    return; 
-                case allShapes.rect:
-                    RectangleButton.IsChecked = false;
-                    return;
-                case allShapes.ellipse:
-                    EllipseButton.IsChecked = false;
-                    return;        
-                case allShapes.polygon:
-                    TriangleButton.IsChecked = false;
-                    return;
-                case allShapes.polyline:
-                    PolylineButton.IsChecked = false;
-                    return;
-                case allShapes.none:
-                    return;
-            }
+            return;            
         }
 
         private void mainCanvas_RightMouseDown(object sender, MouseEventArgs e)
         {
-            if (selectedShape != allShapes.polyline) return;
-
             if (isDrawing && currentShape is ShapeModels.Polyline)
             {
+                (currentShape as ShapeModels.Polyline)?.Finish();
                 shapes.Add(currentShape);
-                isDrawing = false;
                 currentShape = null;
+                isDrawing = false;
             }
         } 
 
@@ -104,120 +60,35 @@ namespace OOP_paint
         {
             Debug.WriteLine("Это сообщение для дебаггера.");
 
-            if (selectedShape == allShapes.none) return;
+            if (selectedButton == null) return;
+
 
             Point currentPoint = e.GetPosition(MainCanvas);
 
-            if (currentShape == null)
+            if (currentShape is ShapeModels.Polyline polyline)
             {
-                startPoint = currentPoint;
+                (currentShape as ShapeModels.Polyline)?.AddPoint(currentPoint);
+                RedrawCanvas();
+                return;
+            }
+
+            if (currentShape == null && !isDrawing)
+            {
+                currentShape = shapeFactory[selectedButton.Name]();
                 isDrawing = true;
-
-                switch (selectedShape)
-                {
-                    case allShapes.line:
-                        currentShape = new ShapeModels.Line()
-                        {
-                            StartPoint = startPoint,
-                            EndPoint = startPoint,
-                            Stroke = Brushes.White,
-                            StrokeThickness = 2
-                        };
-                        break;
-
-                    case allShapes.rect:
-                        currentShape = new ShapeModels.Rectangle
-                        {
-                            TopLeft = startPoint,
-                            Width = 0,
-                            Height = 0,
-                            Stroke = Brushes.White,
-                            StrokeThickness = 2,
-                        };
-                        break;
-
-                    case allShapes.ellipse:
-                        currentShape = new ShapeModels.Ellipse
-                        {
-                            TopLeft = startPoint,
-                            Width = 0,
-                            Height = 0,
-                            Stroke = Brushes.White,
-                            StrokeThickness = 2,
-                        };
-                        break;
-
-                    case allShapes.polygon:
-                        currentShape = new ShapeModels.Triangle()
-                        {
-                            Stroke = Brushes.White,
-                            StrokeThickness = 2,
-                            StartPoint = currentPoint,
-                            EndPoint = currentPoint
-                        };
-
-                        Debug.WriteLine("Done");
-                        break;
-
-                        //currentShape = new Models.Polygon(new PointCollection { startPoint })
-                       // {
-                        //    Stroke = Brushes.White,
-                       //     StrokeThickness = 2
-                       // };
-                       // break;
-
-                    case allShapes.polyline:
-                        currentShape = new ShapeModels.Polyline(new PointCollection { startPoint })
-                        {
-                            Stroke = Brushes.White,
-                            StrokeThickness = 2
-                        };
-                        break;
-                }
+                currentShape.Start(currentPoint);
             }
             else
             {
-                // Второй клик, конец рисования
-                if (selectedShape == allShapes.polygon)
-                {
-                    if (currentShape is ShapeModels.Triangle triangle)
-                    {
-                        
-                    }
-                }
-                else
-                {
-                    if (currentShape is ShapeModels.Line line)
-                    {
-                        line.EndPoint = currentPoint;
-                    }
-                    else if (currentShape is ShapeModels.Rectangle rect)
-                    {
-                        rect.Width = Math.Abs(currentPoint.X - startPoint.X);
-                        rect.Height = Math.Abs(currentPoint.Y - startPoint.Y);
-                        rect.TopLeft = new Point(Math.Min(startPoint.X, currentPoint.X), Math.Min(startPoint.Y, currentPoint.Y));
-                    }
-                    else if (currentShape is ShapeModels.Ellipse ellipse)
-                    {
-                        ellipse.Width = Math.Abs(currentPoint.X - startPoint.X);
-                        ellipse.Height = Math.Abs(currentPoint.Y - startPoint.Y);
-                        ellipse.TopLeft = new Point(Math.Min(startPoint.X, currentPoint.X), Math.Min(startPoint.Y, currentPoint.Y));
-                    }
-                    else if (currentShape is ShapeModels.Polyline polyline)
-                    {
-                        polyline.Points.Add(currentPoint);
-                    }
-                }
-
-                if (currentShape is not ShapeModels.Polyline || currentShape is ShapeModels.Triangle)
-                {
-                    shapes.Add(currentShape);
-                    currentShape = null;
-                    isDrawing = false;
-                }
+                isDrawing = false;
+                currentShape.Update(currentPoint);
+                shapes.Add(currentShape);
+                currentShape = null;
             }
 
             RedrawCanvas();
+
+            return;
         }
 
         private void mainCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -226,48 +97,10 @@ namespace OOP_paint
 
             Point endPoint = e.GetPosition(MainCanvas);
 
-            switch (currentShape)
-            {
-                case ShapeModels.Line line:
-                    line.EndPoint = endPoint;
-                    break;
-
-                case ShapeModels.Rectangle rect:
-                    rect.Width = Math.Abs(endPoint.X - startPoint.X);
-                    rect.Height = Math.Abs(endPoint.Y - startPoint.Y);
-                    rect.TopLeft = new Point(Math.Min(startPoint.X, endPoint.X), Math.Min(startPoint.Y, endPoint.Y));
-                    break;
-
-                case ShapeModels.Ellipse ellipse:
-                    ellipse.Width = Math.Abs(endPoint.X - startPoint.X);
-                    ellipse.Height = Math.Abs(endPoint.Y - startPoint.Y);
-                    ellipse.TopLeft = new Point(Math.Min(startPoint.X, endPoint.X), Math.Min(startPoint.Y, endPoint.Y));
-                    break;
-
-                case ShapeModels.Triangle triangle:
-                    triangle.EndPoint = endPoint;
-                    
-                    break;
-
-                    //if (polygon.Points.Count > 1)
-                    //{
-                    //    polygon.Points[polygon.Points.Count - 1] = endPoint; // Adjust last point while drawing
-                    //}
-
-                case ShapeModels.Polyline polyline:
-                    if (polyline.Points.Count > 1)
-                    {
-                        
-                        polyline.Points[polyline.Points.Count - 1] = endPoint; 
-                    } else
-                    {
-                        polyline.Points.Add(endPoint);
-                    }
-                    break;
-            }
-
-            // Перерисовываем холст
+            currentShape.Update(endPoint);
             RedrawCanvas();
+
+            return;
         }
 
         private void RedrawCanvas()
@@ -289,6 +122,16 @@ namespace OOP_paint
         public MainWindow()
         {
             InitializeComponent();
+
+            shapeFactory = new Dictionary<string, Func<ShapeBase>>
+            {
+                { "RectangleButton", () => new ShapeModels.Rectangle { Stroke = Brushes.White, StrokeThickness = 2 } },
+                { "EllipseButton", () => new ShapeModels.Ellipse { Stroke = Brushes.White, StrokeThickness = 2 } },
+                { "LineButton", () => new ShapeModels.Line { Stroke = Brushes.White, StrokeThickness = 2 } },
+                { "TriangleButton", () => new ShapeModels.Triangle { Stroke = Brushes.White, StrokeThickness = 2 } },
+                { "PolylineButton", () => new ShapeModels.Polyline { Stroke = Brushes.White, StrokeThickness = 2 } }
+            };
+
         }
     }
 }

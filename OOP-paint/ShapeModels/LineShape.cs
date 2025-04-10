@@ -1,17 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace OOP_paint.ShapeModels
 {
     public class Line : ShapeBase
     {
+        public Point StartPoint { get; set; }
+        public Point EndPoint { get; set; }
 
-        public System.Windows.Point StartPoint { get; set; }
-        public System.Windows.Point EndPoint { get; set; }
+        private Point _initialPoint;
+
+        public override void Start(Point startPoint)
+        {
+            _initialPoint = startPoint;
+            StartPoint = startPoint;
+            EndPoint = startPoint; // пока не тянем — линия нулевая
+        }
+
+        public override void Update(Point currentPoint)
+        {
+            EndPoint = currentPoint;
+        }
 
         public override void Draw(Canvas canvas)
         {
@@ -23,8 +32,9 @@ namespace OOP_paint.ShapeModels
                 Y2 = EndPoint.Y,
                 Stroke = Stroke,
                 StrokeThickness = StrokeThickness,
+                IsHitTestVisible = false
             };
-            line.IsHitTestVisible = false;
+
             canvas.Children.Add(line);
         }
     }

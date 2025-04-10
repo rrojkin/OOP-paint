@@ -80,6 +80,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -135,12 +137,101 @@
              />
 
             <Button Name="SettingsButton"
-                          Grid.Column="5"
+                          Grid.Column="7"
                           Content="Settings"
                           HorizontalAlignment="Right"
                           Margin="0, 0, 10, 0"
                           Width ="50"
              />
+
+            <Grid Name="ToggleGrid"
+                  Grid.Column="5"
+                  Margin="10, 0, 0, 0"
+                  >
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Slider Name="WeightSlider"
+                        Minimum="0"
+                        Maximum="100"
+                        Width="100"
+                        Grid.Row="0"
+                        >
+                </Slider>
+                
+                <TextBox x:Name="WeightTextbox"
+                         Width="50"
+                         Grid.Row="1"
+                         >
+                    
+                </TextBox>
+
+            </Grid>
+
+            <Grid Grid.Column = "6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" MinHeight="10"/>
+                    <RowDefinition Height="Auto" MinHeight="10"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Background="Black"
+                            Grid.Row="0" Grid.Column="0">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="1">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="2">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="3">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="4">
+                    </Button>
+
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Background="Black"
+                            Grid.Row="0"
+                            Grid.Column="0">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="1">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="2">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="3">
+                    </Button>
+
+                    <Button Background="Black" Grid.Row="0" Grid.Column="4">
+                    </Button>
+                </Grid>
+            </Grid>
+           
         </Grid>
 
 
