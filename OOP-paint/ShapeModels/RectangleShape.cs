@@ -47,7 +47,8 @@ namespace OOP_paint.ShapeModels
         public override void OnClick(Point clickPoint)
         {
             Update(clickPoint);
-            IsFinished = true; // линия завершается после одного клика
+            IsFinished = true; 
+            undoRedo.Push(this);
         }
 
     }

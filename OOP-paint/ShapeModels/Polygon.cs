@@ -24,6 +24,7 @@ namespace OOP_paint.ShapeModels
             }
 
             IsFinished = true;
+            undoRedo.Push(this);
         }
 
 

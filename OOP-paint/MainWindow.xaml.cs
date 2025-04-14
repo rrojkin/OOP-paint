@@ -26,6 +26,8 @@ namespace OOP_paint
         private ToggleButton selectedButton = null;
         private bool isBrushSelected = true;
 
+        private UndoRedoManager UndoRedoManager = new UndoRedoManager();
+
         public void shapeButtonClick(object sender, RoutedEventArgs e)
         {
             if (selectedButton != null)
@@ -63,13 +65,13 @@ namespace OOP_paint
                 currentShape.StrokeThickness = weight;
                 currentShape.Stroke = strokeBrush;
                 currentShape.Start(currentPoint);
+                currentShape.undoRedo = UndoRedoManager;
                 isDrawing = true;
             }
             else
             {
                 currentShape.OnClick(currentPoint);
 
-                // пусть OnClick сам решает, добавлять ли точку, завершать ли рисование и т.д.
                 if (currentShape.IsFinished)
                 {
                     shapes.Add(currentShape);
@@ -168,6 +170,18 @@ namespace OOP_paint
                 isBrushSelected = false;
                 BrushColorButton.IsChecked = false;
             }
+        }
+
+        private void UndoButton_Click(object sender, RoutedEventArgs e)
+        {
+            UndoRedoManager.Undo(shapes);
+            RedrawCanvas();
+        }
+
+        private void RedoButton_Click(object sender, RoutedEventArgs e)
+        {
+            UndoRedoManager.Redo(shapes);
+            RedrawCanvas();
         }
     }
 }

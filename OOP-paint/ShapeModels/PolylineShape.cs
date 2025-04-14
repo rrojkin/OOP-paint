@@ -63,11 +63,11 @@ namespace OOP_paint.ShapeModels
             else
             {
                 Points.Add(clickPoint);
-                Points.Add(clickPoint); // временная точка
+                Points.Add(clickPoint); 
             }
 
-            // фигура не завершена — завершится по правому клику
             IsFinished = false;
+            undoRedo.Push(this);
         }
 
     }

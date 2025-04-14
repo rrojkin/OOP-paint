@@ -81,6 +81,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -145,8 +146,36 @@
                           Click="shapeButtonClick"
             />
 
+            <Grid Name="UndoRedoGrid"
+                  Grid.Column="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Name="UndoButton"
+                        Grid.Row="0"
+                        Background="AliceBlue"
+                        Width="50"
+                        Content="Undo"
+                        Click="UndoButton_Click"
+                        >
+                </Button>
+
+                <Button Name="RedoButton"
+                        Grid.Row="1"
+                        Background="AliceBlue"
+                        Width="50"
+                        Content="Redo"
+                        Click="RedoButton_Click"
+                >
+                </Button>
+
+
+            </Grid>
+
             <Button Name="SettingsButton"
-                          Grid.Column="8"
+                          Grid.Column="9"
                           Content="Settings"
                           HorizontalAlignment="Right"
                           Margin="0, 0, 10, 0"

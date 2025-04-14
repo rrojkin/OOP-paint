@@ -24,20 +24,17 @@ namespace OOP_paint.ShapeModels
 
         public override void Draw(Canvas canvas)
         {
-            // A и B — основание (горизонтально)
             Point A = StartPoint;
             Point B = EndPoint;
 
-            // C — вершина равнобедренного треугольника
             double midX = (A.X + B.X) / 2;
-            double height = Math.Abs(B.X - A.X); // можно заменить на кастомную высоту
+            double height = Math.Abs(B.X - A.X);
 
-            // Вершина — выше (меньше по Y)
             Point C = new Point(midX, Math.Min(A.Y, B.Y) - height / 2);
 
             var polyline = new System.Windows.Shapes.Polyline
             {
-                Points = new PointCollection { A, B, C, A }, // замкнутая фигура
+                Points = new PointCollection { A, B, C, A }, 
                 Stroke = Stroke,
                 StrokeThickness = StrokeThickness,
                 IsHitTestVisible = false,
@@ -50,7 +47,8 @@ namespace OOP_paint.ShapeModels
         public override void OnClick(Point clickPoint)
         {
             Update(clickPoint);
-            IsFinished = true; // линия завершается после одного клика
+            IsFinished = true;
+            undoRedo.Push(this);
         }
     }
 }
