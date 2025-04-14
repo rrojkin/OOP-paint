@@ -37,5 +37,12 @@ namespace OOP_paint.ShapeModels
 
             canvas.Children.Add(line);
         }
+
+        public override void OnClick(Point clickPoint)
+        {
+            Update(clickPoint);
+            IsFinished = true; // линия завершается после одного клика
+        }
+
     }
 }

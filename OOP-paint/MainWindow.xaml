@@ -26,13 +26,11 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="DarkGray" />
                                 <Setter TargetName="Border" Property="BorderBrush" Value="Black" />
                                 <Setter TargetName="Border" Property="BorderThickness" Value="1" />
                                 <Setter TargetName="Border" Property="Padding" Value="0" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="LightGray" />
                             </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -75,6 +73,7 @@
               >
 
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -136,8 +135,18 @@
                           Click="shapeButtonClick"
              />
 
+            <ToggleButton Name="PolygonButton"
+                          Grid.Column="5"
+                          Content="Polygon"
+                          HorizontalAlignment="Left"
+                          Margin="10, 0, 0, 0"
+                          Width ="50"
+                          Style="{StaticResource PressedToggleButtonStyle}"
+                          Click="shapeButtonClick"
+            />
+
             <Button Name="SettingsButton"
-                          Grid.Column="7"
+                          Grid.Column="8"
                           Content="Settings"
                           HorizontalAlignment="Right"
                           Margin="0, 0, 10, 0"
@@ -145,7 +154,7 @@
              />
 
             <Grid Name="ToggleGrid"
-                  Grid.Column="5"
+                  Grid.Column="6"
                   Margin="10, 0, 0, 0"
                   >
                 
@@ -159,76 +168,87 @@
                         Maximum="100"
                         Width="100"
                         Grid.Row="0"
+                        ValueChanged="WeightSlider_ValueChanged"
                         >
                 </Slider>
                 
                 <TextBox x:Name="WeightTextbox"
                          Width="50"
                          Grid.Row="1"
+                         Text="1"
+                         TextAlignment="Center"
+                         PreviewTextInput="WeightTextbox_PreviewTextInput"
                          >
                     
                 </TextBox>
 
             </Grid>
 
-            <Grid Grid.Column = "6">
+            <Grid Grid.Column = "7">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="10"/>
-                    <RowDefinition Height="Auto" MinHeight="10"/>
+                    <RowDefinition Height="Auto" MinHeight="20"/>
+                    <RowDefinition Height="Auto" MinHeight="20"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
                     </Grid.ColumnDefinitions>
 
                     <Button Background="Black"
-                            Grid.Row="0" Grid.Column="0">
+                            Grid.Row="0" Grid.Column="0" Click="mycolorButtonClick">
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="1">
+                    <Button Background="White" Grid.Row="0" Grid.Column="1" Click="mycolorButtonClick">
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="2">
+                    <Button Background="Blue" Grid.Row="0" Grid.Column="2" Click="mycolorButtonClick">
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="3">
+                    <Button Background="Yellow" Grid.Row="0" Grid.Column="3" Click="mycolorButtonClick">
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="4">
+                    <Button Background="Red" Grid.Row="0" Grid.Column="4" Click="mycolorButtonClick">
                     </Button>
 
+                    <ToggleButton Name="BrushColorButton" Background="White" Grid.Row="0" Grid.Column="5" Content="Brush" Click="BrushColorButton_Click" Style="{StaticResource PressedToggleButtonStyle}" IsChecked="True"></ToggleButton>
                 </Grid>
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
-                        <ColumnDefinition Width="Auto" MinWidth="10"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
+                        <ColumnDefinition Width="Auto" MinWidth="20"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Background="Black"
+                    <Button Background="Pink"
                             Grid.Row="0"
-                            Grid.Column="0">
+                            Grid.Column="0"
+                            Click="mycolorButtonClick">
+                            
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="1">
+                    <Button Background="Gray" Grid.Row="0" Grid.Column="1" Click="mycolorButtonClick">
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="2">
+                    <Button Background="Green" Grid.Row="0" Grid.Column="2" Click="mycolorButtonClick">
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="3">
+                    <Button Background="Orange" Grid.Row="0" Grid.Column="3" Click="mycolorButtonClick">
                     </Button>
 
-                    <Button Background="Black" Grid.Row="0" Grid.Column="4">
+                    <Button Background="Purple" Grid.Row="0" Grid.Column="4" Click="mycolorButtonClick">
                     </Button>
+
+                    <ToggleButton Name="FillColorButton" Background="Transparent" Grid.Row="0" Grid.Column="5" Content="Fill" Click="FillButtonColor_Click" Style="{StaticResource PressedToggleButtonStyle}"></ToggleButton>
                 </Grid>
             </Grid>
            

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,24 +14,17 @@ namespace OOP_paint
 
         private Dictionary<string, Func<ShapeBase>> shapeFactory;
 
+        private double weight = 1.0;
+        private Brush strokeBrush = Brushes.White;
+        private Brush fillBrush = Brushes.Transparent;
 
-        private enum allShapes
-        {
-            line,
-            rect,
-            ellipse,
-            polygon,
-            polyline,
-            none
-        }
 
-        private allShapes selectedShape = allShapes.none;
         private ShapeBase currentShape;
         private Point startPoint;
         private bool isDrawing = false;
         private List<ShapeBase> shapes = new List<ShapeBase>();
         private ToggleButton selectedButton = null;
-
+        private bool isBrushSelected = true;
 
         public void shapeButtonClick(object sender, RoutedEventArgs e)
         {
@@ -54,42 +48,39 @@ namespace OOP_paint
                 currentShape = null;
                 isDrawing = false;
             }
-        } 
+        }
 
         private void mainCanvas_LeftMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Debug.WriteLine("Это сообщение для дебаггера.");
-
             if (selectedButton == null) return;
-
 
             Point currentPoint = e.GetPosition(MainCanvas);
 
-            if (currentShape is ShapeModels.Polyline polyline)
-            {
-                (currentShape as ShapeModels.Polyline)?.AddPoint(currentPoint);
-                RedrawCanvas();
-                return;
-            }
-
-            if (currentShape == null && !isDrawing)
+            if (currentShape == null)
             {
                 currentShape = shapeFactory[selectedButton.Name]();
-                isDrawing = true;
+                currentShape.Fill = fillBrush;
+                currentShape.StrokeThickness = weight;
+                currentShape.Stroke = strokeBrush;
                 currentShape.Start(currentPoint);
+                isDrawing = true;
             }
             else
             {
-                isDrawing = false;
-                currentShape.Update(currentPoint);
-                shapes.Add(currentShape);
-                currentShape = null;
+                currentShape.OnClick(currentPoint);
+
+                // пусть OnClick сам решает, добавлять ли точку, завершать ли рисование и т.д.
+                if (currentShape.IsFinished)
+                {
+                    shapes.Add(currentShape);
+                    currentShape = null;
+                    isDrawing = false;
+                }
             }
 
             RedrawCanvas();
-
-            return;
         }
+
 
         private void mainCanvas_MouseMove(object sender, MouseEventArgs e)
         {
@@ -129,9 +120,54 @@ namespace OOP_paint
                 { "EllipseButton", () => new ShapeModels.Ellipse { Stroke = Brushes.White, StrokeThickness = 2 } },
                 { "LineButton", () => new ShapeModels.Line { Stroke = Brushes.White, StrokeThickness = 2 } },
                 { "TriangleButton", () => new ShapeModels.Triangle { Stroke = Brushes.White, StrokeThickness = 2 } },
-                { "PolylineButton", () => new ShapeModels.Polygon { Stroke = Brushes.White, StrokeThickness = 2 } }
+                { "PolylineButton", () => new ShapeModels.Polyline { Stroke = Brushes.White, StrokeThickness = 2 } },
+                { "PolygonButton", () => new ShapeModels.Polygon { Stroke = Brushes.White, Fill = Brushes.Transparent, StrokeThickness = 2 } }
             };
 
+        }
+
+        private void WeightSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            double value = e.NewValue;
+            WeightTextbox.Text = ((int)value).ToString();
+            weight = value;
+        }
+
+        private void WeightTextbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            string inputChar = e.Text;
+        }
+
+        private void mycolorButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (isBrushSelected)
+            {
+                strokeBrush = button.Background;
+                BrushColorButton.Background = strokeBrush;
+            }
+            else
+            {
+                fillBrush = button.Background;
+                FillColorButton.Background = fillBrush;
+            }
+        }
+
+        private void BrushColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isBrushSelected) {
+                isBrushSelected = true;
+                FillColorButton.IsChecked = false;
+            }
+        }
+
+        private void FillButtonColor_Click(object sender, RoutedEventArgs e)
+        {
+            if (isBrushSelected) {
+                isBrushSelected = false;
+                BrushColorButton.IsChecked = false;
+            }
         }
     }
 }

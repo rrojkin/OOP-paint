@@ -11,8 +11,6 @@ namespace OOP_paint.ShapeModels
     public class Polygon: Polyline
     {
 
-        public Brush Fill { get; set; } = Brushes.Transparent;
-
         public override void Finish()
         {
             if (Points.Count >= 2)
@@ -24,6 +22,8 @@ namespace OOP_paint.ShapeModels
             {
                 Points.Add(Points[0]);
             }
+
+            IsFinished = true;
         }
 
 

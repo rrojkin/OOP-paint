@@ -52,5 +52,23 @@ namespace OOP_paint.ShapeModels
             };
             canvas.Children.Add(polyline);
         }
+
+        public override void OnClick(Point clickPoint)
+        {
+            if (Points.Count >= 2)
+            {
+                Points[Points.Count - 1] = clickPoint;
+                Points.Add(clickPoint);
+            }
+            else
+            {
+                Points.Add(clickPoint);
+                Points.Add(clickPoint); // временная точка
+            }
+
+            // фигура не завершена — завершится по правому клику
+            IsFinished = false;
+        }
+
     }
 }

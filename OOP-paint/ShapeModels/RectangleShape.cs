@@ -18,7 +18,8 @@ namespace OOP_paint.ShapeModels
                 Width = Width,
                 Height = Height,
                 Stroke = Stroke,
-                StrokeThickness = StrokeThickness
+                StrokeThickness = StrokeThickness,
+                Fill = Fill
             };
 
             Canvas.SetLeft(rect, TopLeft.X);
@@ -42,5 +43,12 @@ namespace OOP_paint.ShapeModels
             Height = Math.Abs(currentPoint.Y - _startPoint.Y);
             TopLeft = new Point(Math.Min(currentPoint.X, _startPoint.X), Math.Min(currentPoint.Y, _startPoint.Y));
         }
+
+        public override void OnClick(Point clickPoint)
+        {
+            Update(clickPoint);
+            IsFinished = true; // линия завершается после одного клика
+        }
+
     }
 }

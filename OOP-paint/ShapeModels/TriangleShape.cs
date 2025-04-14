@@ -40,10 +40,17 @@ namespace OOP_paint.ShapeModels
                 Points = new PointCollection { A, B, C, A }, // замкнутая фигура
                 Stroke = Stroke,
                 StrokeThickness = StrokeThickness,
-                IsHitTestVisible = false
+                IsHitTestVisible = false,
+                Fill = Fill
             };
 
             canvas.Children.Add(polyline);
+        }
+
+        public override void OnClick(Point clickPoint)
+        {
+            Update(clickPoint);
+            IsFinished = true; // линия завершается после одного клика
         }
     }
 }
