@@ -27,6 +27,7 @@ namespace OOP_paint
         private bool isBrushSelected = true;
 
         private UndoRedoManager UndoRedoManager = new UndoRedoManager();
+        private FileManager fileManager = new FileManager();
 
         public void shapeButtonClick(object sender, RoutedEventArgs e)
         {
@@ -181,6 +182,18 @@ namespace OOP_paint
         private void RedoButton_Click(object sender, RoutedEventArgs e)
         {
             UndoRedoManager.Redo(shapes);
+            RedrawCanvas();
+        }
+
+        private void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            fileManager.OpenFile(ref shapes);
+            RedrawCanvas();
+        }
+
+        private void SaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            fileManager.SaveFile(shapes);
             RedrawCanvas();
         }
     }
