@@ -13,4 +13,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OOP_paint.Core\OOP_paint.Core.csproj" />
+    <ProjectReference Include="..\TrapezoidPlugin\TrapezoidPlugin.csproj" />
+  </ItemGroup>
+
 </Project>

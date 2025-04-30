@@ -82,6 +82,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -146,8 +147,18 @@
                           Click="shapeButtonClick"
             />
 
+            <ToggleButton  Name="PluginButton"
+                           Grid.Column="6"
+                           Content="Plugin"
+                           HorizontalAlignment="Left"
+                           Margin="10, 0, 0, 0"
+                           Width ="50"
+                           Style="{StaticResource PressedToggleButtonStyle}"
+                           Click="PluginButton_Click"
+            />
+
             <Grid Name="ToggleGrid"
-                  Grid.Column="6"
+                  Grid.Column="7"
                   Margin="10, 0, 0, 0"
                   >
                 
@@ -177,7 +188,7 @@
 
             </Grid>
 
-            <Grid Grid.Column = "7">
+            <Grid Grid.Column = "8">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" MinHeight="20"/>
                     <RowDefinition Height="Auto" MinHeight="20"/>
@@ -245,7 +256,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Name="UndoRedoGrid" Grid.Column="8">
+            <Grid Name="UndoRedoGrid" Grid.Column="9">
                 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -267,7 +278,7 @@
                         Click="RedoButton_Click"/>
             </Grid>
 
-            <Grid Name="FileGrid" Grid.Column="10" Width="100">
+            <Grid Name="FileGrid" Grid.Column="11" Width="100">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

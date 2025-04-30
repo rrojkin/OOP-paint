@@ -1,10 +1,16 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Win32;
 using OOP_paint.ShapeModels;
+using System.Reflection;
+using Microsoft.Win32;
+using System.Windows.Controls.Primitives;
+using TrapezoidPlugin;
 
 namespace OOP_paint
 {
@@ -124,7 +130,16 @@ namespace OOP_paint
                 { "LineButton", () => new ShapeModels.Line { Stroke = Brushes.White, StrokeThickness = 2 } },
                 { "TriangleButton", () => new ShapeModels.Triangle { Stroke = Brushes.White, StrokeThickness = 2 } },
                 { "PolylineButton", () => new ShapeModels.Polyline { Stroke = Brushes.White, StrokeThickness = 2 } },
-                { "PolygonButton", () => new ShapeModels.Polygon { Stroke = Brushes.White, Fill = Brushes.Transparent, StrokeThickness = 2 } }
+                { "PolygonButton", () => new ShapeModels.Polygon { Stroke = Brushes.White, Fill = Brushes.Transparent, StrokeThickness = 2 } },
+
+                { "PluginButton", () =>
+                    {
+                        var plug  = new TrapezoidPlugin.TrapezoidPlugin();
+                        var shape = plug.CreateShape();
+                        shape.undoRedo = UndoRedoManager;
+                        return shape;
+                    }
+                }
             };
 
         }
@@ -195,6 +210,11 @@ namespace OOP_paint
         {
             fileManager.SaveFile(shapes);
             RedrawCanvas();
+        }
+
+        private void PluginButton_Click(object sender, RoutedEventArgs e)
+        {
+            shapeButtonClick(sender, e);
         }
     }
 }
