@@ -7,7 +7,6 @@ using OOP_paint.ShapeModels;
 
 namespace TrapezoidPlugin
 {
-    // 1) Класс самой фигуры — наследник ShapeBase
     public class TrapezoidShape : ShapeBase
     {
         public Point _start, _end;
@@ -27,11 +26,11 @@ namespace TrapezoidPlugin
             var A = _start;
             var C = _end;
             double w = Math.Abs(C.X - A.X);
-            double tw = w * 0.6;    // верхнее основание = 60% нижнего
+            double tw = w * 0.6;    
             double left = Math.Min(A.X, C.X);
             double top = Math.Min(A.Y, C.Y);
 
-            // Вершины: p1–p4
+            // Вершины p1–p4
             var p1 = new Point(left, top + (C.Y > A.Y ? w : 0));
             var p2 = new Point(left + w, p1.Y);
             var p3 = new Point(left + w - (w - tw) / 2, top);
@@ -56,7 +55,7 @@ namespace TrapezoidPlugin
         }
     }
 
-    // 2) Класс-плагин — фабрика фигур
+    // Класс-плагин — фабрика фигур
     public class TrapezoidPlugin : IShapePlugin
     {
         public string Name => "Trapezoid";

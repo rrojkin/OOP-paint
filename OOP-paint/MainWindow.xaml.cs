@@ -1,16 +1,9 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.Win32;
 using OOP_paint.ShapeModels;
-using System.Reflection;
-using Microsoft.Win32;
-using System.Windows.Controls.Primitives;
-using TrapezoidPlugin;
 
 namespace OOP_paint
 {

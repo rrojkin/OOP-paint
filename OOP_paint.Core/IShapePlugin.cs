@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OOP_paint.ShapeModels
+﻿namespace OOP_paint.ShapeModels
 {
-    /// <summary>
-    /// Контракт для плагина: даёт имя и умеет создавать ShapeBase.
-    /// </summary>
+    // Контракт для плагина: даёт имя и умеет создавать ShapeBase.
     public interface IShapePlugin
     {
-        /// <summary>Отображаемое имя (и имя кнопки).</summary>
+        // Отображаемое имя
         string Name { get; }
 
-        /// <summary>Создаёт новый экземпляр фигуры.</summary>
+        /// Создаёт новый экземпляр фигуры.
         ShapeBase CreateShape();
     }
 }
